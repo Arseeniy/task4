@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,9 +10,7 @@ public class Main {
         if (args.length == 1) {
 
             List<Integer> sourceList = new ArrayList<>();
-            int upperLimit = Integer.MIN_VALUE;
-            int lowerLimit = Integer.MAX_VALUE;
-            int targetNumber = 0;
+
             int result = 0;
 
             Scanner scanner = null;
@@ -23,23 +22,11 @@ public class Main {
             while (scanner.hasNext()) {
                 sourceList.add(scanner.nextInt());
             }
-            for (Integer number : sourceList) {
-                if (number > upperLimit) {
-                    upperLimit = number;
-                }
-                if (number < lowerLimit) {
-                    lowerLimit = number;
-                }
-            }
 
-            targetNumber = (upperLimit - lowerLimit) / 2;
-
+            Collections.sort(sourceList);
+            int targetNumber = sourceList.get(sourceList.size() / 2);
             for (Integer number : sourceList) {
-                if (number < targetNumber) {
-                    result += targetNumber - number;
-                } else if (number > targetNumber) {
-                    result += number - targetNumber;
-                }
+                result += Math.abs(number - targetNumber);
             }
             System.out.println(result);
         }
